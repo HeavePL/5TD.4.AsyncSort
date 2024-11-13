@@ -1,5 +1,6 @@
 package com.example.a5td4asyncsort;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Handler handler;
     ProgressBar progressBar;
     int[] array;
+    SortView sortView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         progressBar = findViewById(R.id.progressBar);
+        sortView = findViewById(R.id.sortView2);
 
         EditText editTextNumber = findViewById(R.id.editTextNumber);
         Button startBtn = findViewById(R.id.btnStart);
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(v -> {
             String sizeStr = editTextNumber.getText().toString();
                 if (sizeStr.isEmpty()){
-                    Toast.makeText(this, "Wprowadz ilosc elementow", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Enter number of elements", Toast.LENGTH_SHORT).show();
                     return;
                 }
             int size = Integer.parseInt(sizeStr);
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         int[] array = new int[size];
         Random random = new Random();
         for (int i = 0; i < size; i++) {
-            array[i] = random.nextInt(150) + 1;
+            array[i] = random.nextInt(100) + 1;
         }
         return array;
     }
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private void bubbleSort(){
         if(array.length<=1){
             handler.post(()->{
-
+                sortView.setArray(array);
                 progressBar.setProgress(100);
                 Toast.makeText(this,"Sorting completed", Toast.LENGTH_SHORT).show();
             });
@@ -93,8 +96,9 @@ public class MainActivity extends AppCompatActivity {
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
                     // i * n => full cycles + j => partial cycle
-                    int progress =  (int) (((float) (i * n + j) / (n*n))*100);
+                    int progress = (int) (((float) (i * n) / (n*n))*100);
                     handler.post(()->{
+                        sortView.setArray(array.clone());
                         progressBar.setProgress(progress);
                     });
 
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         handler.post(()->{
+            sortView.setArray(array);
             progressBar.setProgress(100);
             Toast.makeText(this,"Sorting completed", Toast.LENGTH_SHORT).show();
         });
@@ -116,4 +121,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();
+    }
 }

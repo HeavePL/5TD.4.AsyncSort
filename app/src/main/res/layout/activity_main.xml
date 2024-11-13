@@ -11,6 +11,8 @@
 
     <TextView
         android:id="@+id/textView"
+        android:textAlignment="center"
+        android:textSize="20dp"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -29,7 +31,7 @@
         />
     <Button
         android:layout_width="175dp"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:id="@+id/btnStart"
         android:text="Sortuj"
         android:layout_gravity="center_horizontal"
@@ -44,5 +46,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
+
+    <com.example.a5td4asyncsort.SortView
+        android:id="@+id/sortView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
