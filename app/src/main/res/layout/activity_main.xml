@@ -49,7 +49,10 @@
 
     <com.example.a5td4asyncsort.SortView
         android:id="@+id/sortView2"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
 </LinearLayout>
